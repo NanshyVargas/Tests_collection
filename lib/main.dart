@@ -122,31 +122,43 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Visibility(
           visible: visability,
           //replacement: Image.asset("assets/3.jpg"),
-          replacement: Column(children: [
-            Text(
-              ('Ты ответил правильно на ${test.get_result()} вопросов'),
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                  color: Colors.white, // цвет текста
-                  fontSize: 35, // высота шрифта
-                  //backgroundColor: Colors.white24
-                 ),
-            ),
-            ElevatedButton(
-                child: Text('Запустить заново'),
-                style: ElevatedButton.styleFrom(
-                    primary: Colors.purple,
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 50, vertical: 20),
-                    textStyle: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 30)),
-                onPressed: () {
-                  visability = true;
-                  test = Test();
-                  test.current_number = -1;
-                  _nextQuestion();
-                }),]),
+          replacement: Container(
+            //padding: const EdgeInsets.only(left: 30, right: 30, top:150, bottom: 200),
+            //constraints: const BoxConstraints.expand(
+            //width: 400,
+            //height: 700,
+            //),
+            child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Padding ( padding: EdgeInsets.only(bottom: 40),
+                    child: Text(
+                    ('Ты ответил правильно на ${test.get_result()} вопросов'),
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: Colors.white, // цвет текста
+                      fontSize: 35, // высота шрифта
+                      //backgroundColor: Colors.white24
+                    ),
+                  ),),
+                  //Spacer(),
+                  ElevatedButton(
+                      child: Text('Запустить заново'),
+                      style: ElevatedButton.styleFrom(
+                          primary: Colors.purple,
+                          padding: const EdgeInsets.only(
+                              left: 20, right: 20, top: 20, bottom: 20),
+                          textStyle: const TextStyle(
+                              color: Colors.white, fontSize: 30)),
+                      onPressed: () {
+                        visability = true;
+                        test = Test();
+                        test.current_number = -1;
+                        _nextQuestion();
+                      }),
+                ]),
+          ),
           child: Column(
             // Column is also a layout widget. It takes a list of children and
             // arranges them vertically. By default, it sizes itself to fit its
@@ -172,9 +184,9 @@ class _MyHomePageState extends State<MyHomePage> {
                 child: Text(
                   ('$question_text'),
                   style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 35,
-                      //backgroundColor: Colors.white24
+                    color: Colors.white,
+                    fontSize: 35,
+                    //backgroundColor: Colors.white24
                   ),
                 ),
               ),
@@ -188,10 +200,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       style: ElevatedButton.styleFrom(
                           primary: Colors.purple,
                           padding: const EdgeInsets.only(
-                              left: 40,
-                          right: 40,
-                          top: 20,
-                          bottom: 20),
+                              left: 40, right: 40, top: 20, bottom: 20),
                           textStyle: const TextStyle(
                               color: Colors.white, fontSize: 35)),
                       onPressed: () {
@@ -202,21 +211,17 @@ class _MyHomePageState extends State<MyHomePage> {
                 padding: EdgeInsets.all(5),
                 child: ElevatedButton(
                     child: Text('$answer2'),
-                   // style: ElevatedButton.styleFrom(
-                   //      primary: Colors.purple,
-                   //      padding: const EdgeInsets.symmetric(
-                   //          horizontal: 60,
-                   //          vertical: 20),
+                    // style: ElevatedButton.styleFrom(
+                    //      primary: Colors.purple,
+                    //      padding: const EdgeInsets.symmetric(
+                    //          horizontal: 60,
+                    //          vertical: 20),
                     style: ElevatedButton.styleFrom(
                         primary: Colors.purple,
                         padding: const EdgeInsets.only(
-                            left: 40,
-                            right: 40,
-                            top: 20,
-                            bottom: 20),
-                        textStyle: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 35)),
+                            left: 40, right: 40, top: 20, bottom: 20),
+                        textStyle:
+                            const TextStyle(color: Colors.white, fontSize: 35)),
                     onPressed: () {
                       test.check_answer(test.current_number, 1);
                       _nextQuestion();
