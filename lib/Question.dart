@@ -1,9 +1,8 @@
-import 'package:for_test/Answer.dart';
 
 class Question {
   late int id_question;
   late String question;
-  late List<Answer> answers;
+  late List<String> answers;
   late int correct_answer_id;
 
   Question(
