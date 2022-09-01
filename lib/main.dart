@@ -109,15 +109,15 @@ class _MyHomePageState extends State<MyHomePage> {
         //height: 600,
         padding: const EdgeInsets.all(16),
         constraints: const BoxConstraints.expand(
-          width: 350,
-          height: 600,
+          width: 400,
+          height: 700,
         ),
         decoration: const BoxDecoration(
           image: const DecorationImage(
             image: AssetImage('assets/2.jpg'),
             fit: BoxFit.cover,
           ),
-          borderRadius: BorderRadius.all(Radius.circular(10.0)),
+          borderRadius: BorderRadius.all(Radius.circular(1.0)),
         ),
         child: Visibility(
           visible: visability,
@@ -127,9 +127,10 @@ class _MyHomePageState extends State<MyHomePage> {
               ('Ты ответил правильно на ${test.get_result()} вопросов'),
               textAlign: TextAlign.center,
               style: TextStyle(
-                  color: Colors.blueAccent, // цвет текста
+                  color: Colors.white, // цвет текста
                   fontSize: 35, // высота шрифта
-                  backgroundColor: Colors.white24),
+                  //backgroundColor: Colors.white24
+                 ),
             ),
             ElevatedButton(
                 child: Text('Запустить заново'),
@@ -138,13 +139,12 @@ class _MyHomePageState extends State<MyHomePage> {
                     padding: const EdgeInsets.symmetric(
                         horizontal: 50, vertical: 20),
                     textStyle: const TextStyle(
-                        decorationColor: Colors.amber,
                         color: Colors.white,
                         fontSize: 30)),
                 onPressed: () {
                   visability = true;
                   test = Test();
-                  test.number = -1;
+                  test.current_number = -1;
                   _nextQuestion();
                 }),]),
           child: Column(
@@ -171,45 +171,54 @@ class _MyHomePageState extends State<MyHomePage> {
                 //child:Text(( test.show_current_question()),
                 child: Text(
                   ('$question_text'),
-                  //(test.get_number().toString()),
                   style: TextStyle(
-                      color: Colors.blueAccent, // зеленый цвет текста
-                      fontSize: 35, // высота шрифта 26
-                      backgroundColor: Colors.white24),
+                      color: Colors.white,
+                      fontSize: 35,
+                      //backgroundColor: Colors.white24
+                  ),
                 ),
               ),
 
               Padding(
                   padding: EdgeInsets.all(5),
                   child: ElevatedButton(
-                      //child: Text(test.get_first_answer(),),
                       child: Text(
                         '$answer1',
                       ),
                       style: ElevatedButton.styleFrom(
                           primary: Colors.purple,
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 50, vertical: 20),
+                          padding: const EdgeInsets.only(
+                              left: 40,
+                          right: 40,
+                          top: 20,
+                          bottom: 20),
                           textStyle: const TextStyle(
-                              color: Colors.white, fontSize: 30)),
+                              color: Colors.white, fontSize: 35)),
                       onPressed: () {
-                        test.check_answer(test.number, 0);
+                        test.check_answer(test.current_number, 0);
                         _nextQuestion();
                       })),
               Padding(
                 padding: EdgeInsets.all(5),
                 child: ElevatedButton(
                     child: Text('$answer2'),
+                   // style: ElevatedButton.styleFrom(
+                   //      primary: Colors.purple,
+                   //      padding: const EdgeInsets.symmetric(
+                   //          horizontal: 60,
+                   //          vertical: 20),
                     style: ElevatedButton.styleFrom(
                         primary: Colors.purple,
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 50, vertical: 20),
+                        padding: const EdgeInsets.only(
+                            left: 40,
+                            right: 40,
+                            top: 20,
+                            bottom: 20),
                         textStyle: const TextStyle(
-                            decorationColor: Colors.amber,
                             color: Colors.white,
-                            fontSize: 30)),
+                            fontSize: 35)),
                     onPressed: () {
-                      test.check_answer(test.number, 1);
+                      test.check_answer(test.current_number, 1);
                       _nextQuestion();
                     }),
               )
