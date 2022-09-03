@@ -6,6 +6,7 @@ class Test {
   late int length = questions.length;
   int current_number = 0;
   int result = 0;
+  String wrong_answers = '';
 
   Test() {
     var container = Container();
@@ -15,10 +16,13 @@ class Test {
   void check_answer(int question_number, int answer) {
     print("res: ${questions[question_number].correct_answer_id == answer}, ${result}");
     if (questions[question_number].correct_answer_id == answer) {
-      result += 1;
-      print("++ ${result}");
+      result += 1;}
+      else {
+    wrong_answers += '\n В вопросе номер ${question_number+1} ответ "${questions[question_number].answers[answer].toString()}" неверный';
+    };
+
     }
-  }
+
 
   String show_current_question() {
     return questions[current_number].toString();
@@ -27,6 +31,7 @@ class Test {
   String go_to_next_question() {
     return questions[current_number + 1].toString();
   }
+
 
   void change_number() {
     current_number += 1;
@@ -58,4 +63,25 @@ class Test {
   int get_result(){
     return result;
   }
+
+  String show_wrong_answers()
+  {
+    String output = '';
+    if (wrong_answers == '')
+    {
+      output = 'Все ответы верны. Ты молодец!';
+    }
+    else
+      {
+        output = 'Список неправильных ответов: $wrong_answers';
+      }
+
+
+    return output;
+  }
+  int how_much_answers() {
+    int output = questions[current_number].answers.length;
+        return output;
+  }
 }
+

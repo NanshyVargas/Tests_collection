@@ -134,11 +134,11 @@ class _MyHomePageState extends State<MyHomePage> {
                 children: [
                   Padding ( padding: EdgeInsets.only(bottom: 40),
                     child: Text(
-                    ('Ты ответил правильно на ${test.get_result()} вопросов'),
+                    ('Ты ответил правильно на ${test.get_result()} вопросов. \n ${test.show_wrong_answers()}'),
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       color: Colors.white, // цвет текста
-                      fontSize: 35, // высота шрифта
+                      fontSize: 25, // высота шрифта
                       //backgroundColor: Colors.white24
                     ),
                   ),),
