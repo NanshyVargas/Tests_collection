@@ -24,8 +24,9 @@ class MyApp extends StatelessWidget {
       home: MyHomePage(
         title: "Сборник тестов",
         question_text: test.show_current_question(),
-        answer1: test.get_first_answer(),
-        answer2: test.get_second_answer(),
+        //answer1: test.get_first_answer(),
+        //answer2: test.get_second_answer(),
+        answs: test.get_all_answers(),
       ),
     );
   }
@@ -36,38 +37,34 @@ class MyHomePage extends StatefulWidget {
     Key? key,
     required this.title,
     required this.question_text,
-    required this.answer1,
-    required this.answer2,
+   // required this.answer1,
+    //required this.answer2,
+    required this.answs,
   }) : super(key: key);
   String question_text;
-  String answer1;
-  String answer2;
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
+  //String answer1;
+  //String answer2;
+  List<String> answs;
 
   final String title;
 
   @override
   State<MyHomePage> createState() =>
-      _MyHomePageState(this.question_text, this.answer1, answer2);
+      //_MyHomePageState(this.question_text, this.answer1, answer2, answs);
+  _MyHomePageState(this.question_text, this.answs);
 }
 
 class _MyHomePageState extends State<MyHomePage> {
   var test = Test();
   var question_text = '';
-  var answer1 = '';
-  var answer2 = '';
+  //var answer1 = '';
+  //var answer2 = '';
   var visability = true;
+  List <String> answer_list = [];
 
 //var question_text = test.show_current_question();
-  _MyHomePageState(this.question_text, this.answer1, this.answer2);
+  //_MyHomePageState(this.question_text, this.answer1, this.answer2, this.answer_list);
+  _MyHomePageState(this.question_text, this.answer_list);
 
   void _nextQuestion() {
     setState(() {
@@ -75,33 +72,21 @@ class _MyHomePageState extends State<MyHomePage> {
       if (!test.is_not_last_question()) {
         test.change_number();
         question_text = test.show_current_question();
-        answer1 = test.get_first_answer();
-        answer2 = test.get_second_answer();
+        //answer1 = test.get_first_answer();
+        //answer2 = test.get_second_answer();
+
+        answer_list = test.get_all_answers();
       } else {
         visability = !test.is_not_last_question();
       }
-
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
     });
   }
 
   @override
   Widget build(BuildContext context) {
     // var test = Test();
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
     return Scaffold(
       appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
         title: Text(widget.title),
       ),
       body: Container(
@@ -109,9 +94,9 @@ class _MyHomePageState extends State<MyHomePage> {
         //height: 600,
         padding: const EdgeInsets.all(16),
         constraints: const BoxConstraints.expand(
-          width: 400,
-          height: 700,
-        ),
+            //width: 400,
+            //height: 700,
+            ),
         decoration: const BoxDecoration(
           image: const DecorationImage(
             image: AssetImage('assets/2.jpg'),
@@ -132,16 +117,18 @@ class _MyHomePageState extends State<MyHomePage> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Padding ( padding: EdgeInsets.only(bottom: 40),
+                  Padding(
+                    padding: EdgeInsets.only(bottom: 40),
                     child: Text(
-                    ('Ты ответил правильно на ${test.get_result()} вопросов. \n ${test.show_wrong_answers()}'),
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: Colors.white, // цвет текста
-                      fontSize: 25, // высота шрифта
-                      //backgroundColor: Colors.white24
+                      ('Ты ответил правильно на ${test.get_result()} вопросов. \n ${test.show_wrong_answers()}'),
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Colors.white, // цвет текста
+                        fontSize: 25, // высота шрифта
+                        //backgroundColor: Colors.white24
+                      ),
                     ),
-                  ),),
+                  ),
                   //Spacer(),
                   ElevatedButton(
                       child: Text('Запустить заново'),
@@ -160,21 +147,8 @@ class _MyHomePageState extends State<MyHomePage> {
                 ]),
           ),
           child: Column(
-            // Column is also a layout widget. It takes a list of children and
-            // arranges them vertically. By default, it sizes itself to fit its
-            // children horizontally, and tries to be as tall as its parent.
-            //
-            // Invoke "debug painting" (press "p" in the console, choose the
-            // "Toggle Debug Paint" action from the Flutter Inspector in Android
-            // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
-            // to see the wireframe for each widget.
-            //
-            // Column has various properties to control how it sizes itself and
-            // how it positions its children. Here we use mainAxisAlignment to
-            // center the children vertically; the main axis here is the vertical
-            // axis because Columns are vertical (the cross axis would be
-            // horizontal).
             mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               //Image.asset("1.png", width: 320, height: 240),
 
@@ -190,43 +164,60 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                 ),
               ),
+              Expanded(
+                flex: 1,
+                  child: ListView.builder(
+                      padding: const EdgeInsets.all(8),
+                      itemCount: test.how_much_answers(),
+                      itemBuilder: (BuildContext context, int index) {
+                        return  Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children:[
+                        Padding(
+                        padding: EdgeInsets.all(5),
+                            child: ElevatedButton(
+                                child: Text(
+                                  '${answer_list[index]}',
+                                ),
+                                style: ElevatedButton.styleFrom(
+                                    primary: Colors.purple,
+                                    padding: const EdgeInsets.only(
+                                    left: 40,
+                                    right: 40,
+                                    top: 20,
+                                    bottom: 20),
+                                    textStyle: const TextStyle(
+                                        color: Colors.white, fontSize: 35)),
+                                onPressed: () {
+                                  test.check_answer(test.current_number, index);
+                                  _nextQuestion();
+                                }),
+                        ),
+                        ],
+                        );
+                      }
 
-              Padding(
-                  padding: EdgeInsets.all(5),
-                  child: ElevatedButton(
-                      child: Text(
-                        '$answer1',
-                      ),
-                      style: ElevatedButton.styleFrom(
-                          primary: Colors.purple,
-                          padding: const EdgeInsets.only(
-                              left: 40, right: 40, top: 20, bottom: 20),
-                          textStyle: const TextStyle(
-                              color: Colors.white, fontSize: 35)),
-                      onPressed: () {
-                        test.check_answer(test.current_number, 0);
-                        _nextQuestion();
-                      })),
-              Padding(
-                padding: EdgeInsets.all(5),
-                child: ElevatedButton(
-                    child: Text('$answer2'),
-                    // style: ElevatedButton.styleFrom(
-                    //      primary: Colors.purple,
-                    //      padding: const EdgeInsets.symmetric(
-                    //          horizontal: 60,
-                    //          vertical: 20),
-                    style: ElevatedButton.styleFrom(
-                        primary: Colors.purple,
-                        padding: const EdgeInsets.only(
-                            left: 40, right: 40, top: 20, bottom: 20),
-                        textStyle:
-                            const TextStyle(color: Colors.white, fontSize: 35)),
-                    onPressed: () {
-                      test.check_answer(test.current_number, 1);
-                      _nextQuestion();
-                    }),
-              )
+                      // Padding(
+                      //   padding: EdgeInsets.all(5),
+                      //   child: ElevatedButton(
+                      //       child: Text('$answer2'),
+                      //       // style: ElevatedButton.styleFrom(
+                      //       //      primary: Colors.purple,
+                      //       //      padding: const EdgeInsets.symmetric(
+                      //       //          horizontal: 60,
+                      //       //          vertical: 20),
+                      //       style: ElevatedButton.styleFrom(
+                      //           primary: Colors.purple,
+                      //           padding: const EdgeInsets.only(
+                      //               left: 40, right: 40, top: 20, bottom: 20),
+                      //           textStyle:
+                      //               const TextStyle(color: Colors.white, fontSize: 35)),
+                      //       onPressed: () {
+                      //         test.check_answer(test.current_number, 1);
+                      //         _nextQuestion();
+                      //       }),
+                      )),
             ],
           ),
         ),

@@ -49,6 +49,10 @@ class Test {
     return questions[current_number].answers[1].toString();
   }
 
+  List<String> get_all_answers() {
+    return questions[current_number].answers;
+  }
+
   String show_result() {
     return result.toString();
   }

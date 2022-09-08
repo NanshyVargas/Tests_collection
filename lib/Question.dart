@@ -10,9 +10,6 @@ class Question {
 
   @override
   String toString() {
-    //for (var i = 0; i < answers.length; i++) {
-      //answersText += "\n${i+1}) ${answers[i]}";
-    //}
     var text = "$question";
     return text;
   }
